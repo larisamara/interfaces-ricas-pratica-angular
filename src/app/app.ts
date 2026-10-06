@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TableModule } from '@openng/optimus-ui/table';
@@ -37,6 +37,7 @@ import { Tarefa } from './models/tarefa.model';
   ],
   providers: [ConfirmationService, MessageService],
   templateUrl: './app.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './app.css',
 })
 export class App {
@@ -81,7 +82,7 @@ export class App {
 
   constructor(
     private confirmationService: ConfirmationService,
-    private messageService: MessageService
+    private messageService: MessageService,
   ) {}
 
   // Helper para instanciar modelo vazio
@@ -135,9 +136,7 @@ export class App {
         });
       }
     } else {
-      const novoId = this.tarefas.length > 0
-        ? Math.max(...this.tarefas.map((t) => t.id)) + 1
-        : 1;
+      const novoId = this.tarefas.length > 0 ? Math.max(...this.tarefas.map((t) => t.id)) + 1 : 1;
       const novaTarefa: Tarefa = {
         ...this.tarefaForm,
         id: novoId,
